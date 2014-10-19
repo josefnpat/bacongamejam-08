@@ -1,5 +1,7 @@
 local game = {}
-playerclass = require("libs.playerclass")
+
+game.background = love.graphics.newImage("assets/background1.png")
+game.foreground = love.graphics.newImage("assets/background2.png")
 
 function game.new()
   local self={}
@@ -26,6 +28,16 @@ function game.new()
 
   self._dmplacewarning=1
 
+  self._bpm_t = 0.54545454545454545454 -- Thanks unek, we suck
+  self._bpm_dt = self._bpm_t
+
+  self._color = {
+    math.random(127,255),
+    math.random(127,255),
+    math.random(127,255)
+  }
+
+
   return self
 end
 
@@ -46,6 +58,15 @@ function game:addBullet( val )
 end
 
 function game:update(dt)
+  self._bpm_dt = self._bpm_dt + dt
+  if self._bpm_dt >= self._bpm_t then
+    self._bpm_dt = self._bpm_dt - self._bpm_t
+    self._color = {
+      math.random(127,255),
+      math.random(127,255),
+      math.random(127,255)
+    }
+  end
   self._dmplacewarning = self._dmplacewarning - dt
   if self._dmplacewarning < 0 then
     self._dmplacewarning = 0
@@ -64,6 +85,12 @@ function game:update(dt)
 end
 
 function game:draw()
+  self._color[4] = math.sin(self._bpm_dt)*255
+  love.graphics.setColor(255,255,255)
+  love.graphics.draw(game.background)
+  love.graphics.setColor(self._color)
+  love.graphics.draw(game.foreground)
+
   for _,enemy in pairs(self._enemies) do
     enemy:draw()
   end

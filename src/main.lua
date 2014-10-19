@@ -18,6 +18,8 @@ colors = require "libs.colors"
 
 game_name = "The amazong game"
 
+love.graphics.setFont(love.graphics.newFont("assets/PressStart2P.ttf"))
+
 dong_bind_down = {}
 function anydong(bind)
   for _,dong in pairs(dongs) do
