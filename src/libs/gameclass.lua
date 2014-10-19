@@ -90,6 +90,7 @@ function game:draw()
   love.graphics.draw(game.background)
   love.graphics.setColor(self._color)
   love.graphics.draw(game.foreground)
+  love.graphics.setColor(255,255,255)
 
   for _,enemy in pairs(self._enemies) do
     enemy:draw()
