@@ -76,9 +76,23 @@ function game:update(dt)
     player:update(dt)
   end
   if self._bullets == nil then self._bullets = {} end
+
   for i,bullet in pairs(self._bullets) do
     bullet:update(dt)
+	for _,enemy in pairs(self._enemies) do
+      local bulletRadius = 32
+	  local dx = enemy:getX() - bullet:getX()
+	  local dy = enemy:getY() - bullet:getY()
+	  if bulletRadius*bulletRadius > dx*dx + dy*dy then
+	    enemy:setHealth( enemy:getHealth() - 1 )
+		table.remove( self._bullets, i )
+		if enemy:getHealth() <= 0 then
+		  table.remove( self._enemies, _ )
+		end
+      end
+    end
   end
+  
   for _,enemy in pairs(self._enemies) do
     enemy:update(dt)
   end
