@@ -21,11 +21,14 @@ function state:draw()
 end
 
 function state:update(dt)
+  if love.mouse.isDown("l") then
+    local x,y = love.mouse.getPosition()
+    self._game:dm_add(x,y)
+  end
   self._game:update(dt)
 end
 
 function state:mousepressed(x,y,button)
-  self._game:dm_add(x,y)
 end
 
 function state:keypressed(key)

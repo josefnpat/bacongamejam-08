@@ -44,6 +44,9 @@ function game.new()
   self._accu_dt = 0
   self._accu_t = 0.5
 
+  self._spawn_dt = 0
+  self._spawn_t = 0.1
+
   return self
 end
 
@@ -64,6 +67,8 @@ function game:addBullet( val )
 end
 
 function game:update(dt)
+
+  self._spawn_dt = self._spawn_dt + dt
 
   self._accu_dt = self._accu_dt + dt
   if self._accu_dt > self._accu_t then
@@ -173,6 +178,11 @@ function game:draw()
 end
 
 function game:dm_add(x,y)
+  if self._spawn_dt > self._spawn_t then
+    self._spawn_dt = 0
+  else
+    return
+  end
   if self._accu > 0 then
     self._accu = self._accu - 1
   else
