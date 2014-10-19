@@ -5,6 +5,8 @@ menuclass = require"libs.menuclass"
 menuitemclass = require"libs.menuitemclass"
 
 gameclass = require"libs.gameclass"
+playerclass = require"libs.playerclass"
+enemyclass = require"libs.enemyclass"
 
 gamestates = {}
 

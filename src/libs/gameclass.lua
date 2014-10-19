@@ -27,10 +27,26 @@ function game:makePlayers()
   print("making players")
   for i=1,3,1 do
     local p = playerclass.new()
-	p:setHealth(10)
-	p:setDamage(1)
-	p:setPosition( math.random(400,1400) )
-	table.insert(self._players, p)
+    p:setHealth(10)
+    p:setDamage(1)
+    p:setPosition( math.random(400,1400) )
+    table.insert(self._players, p)
+  end
+
+  for i=1,1000 do
+    local e = enemyclass.new()
+    e:setHealth(2)
+    e:setDamage(1)
+    local x,y
+    if math.random(0,1) == 1 then
+      x = math.random(0,love.graphics.getWidth())
+      y = math.random(0,1)*love.graphics.getHeight()
+    else
+      y = math.random(0,love.graphics.getHeight())
+      x = math.random(0,1)*love.graphics.getWidth()
+    end
+    e:setPosition(x,y)
+    table.insert(self._enemies,e)
   end
 end
 
@@ -47,9 +63,15 @@ function game:update(dt)
   for i,bullet in pairs(self._bullets) do
     bullet:update(dt)
   end
+  for _,enemy in pairs(self._enemies) do
+    enemy:update(dt)
+  end
 end
 
 function game:draw()
+  for _,enemy in pairs(self._enemies) do
+    enemy:draw()
+  end
   if self._players == nil then self._players = {} end
   for i,player in pairs(self._players) do
     player:draw()

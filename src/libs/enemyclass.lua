@@ -13,12 +13,10 @@ function enemy.new()
   self._damage=1 --init
   self.getDamage=enemy.getDamage
   self.setDamage=enemy.setDamage
-  self._x = math.random(1,love.graphics.getWidth()/10) +
-    math.random(0,1)*love.graphics.getWidth()*9/10
+  self._x = nil
   self.getX=enemy.getX
   self.setX=enemy.setX
-  self._y = math.random(1,love.graphics.getHeight()/10) +
-    math.random(0,1)*love.graphics.getHeight()*9/10
+  self._y = nil
   self.getY=enemy.getY
   self.setY=enemy.setY
   self._speed=nil --init
@@ -28,7 +26,7 @@ function enemy.new()
 end
 
 function enemy:update(dt)
-  local players = game:getPlayers() --TODO?
+  local players = gamestates.game._game:getPlayers()
   local best_dist = math.huge
   local best_index
   for i,v in pairs(players) do
@@ -44,7 +42,7 @@ function enemy:update(dt)
 end
 
 function enemy:draw()
-  love.graphics.circle("line",self:getX(),self:getY())
+  love.graphics.circle("line",self:getX(),self:getY(),16)
 end
 
 function enemy:die()
