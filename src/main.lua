@@ -16,7 +16,10 @@ gamestates.game = require("gamestates.game")
 
 colors = require "libs.colors"
 
-game_name = "The amazong game"
+music = love.audio.newSource("assets/BGJ08.ogg")
+music:setLooping(true)
+
+game_name = "TALOX: Talox Aliens Lie On Xenons" -- aka discosperm
 
 love.graphics.setFont(love.graphics.newFont("assets/PressStart2P.ttf"))
 

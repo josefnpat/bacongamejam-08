@@ -117,7 +117,14 @@ function game:draw()
   for i,bullet in pairs(self._bullets) do
     bullet:draw()
   end
+
+  love.graphics.setColor(255,255,255,self._dmplacewarning*255)
+
+  love.graphics.printf("Click outside the box to choose where you deploy.",
+    0,love.graphics.getHeight()/16,love.graphics.getWidth(),"center")
+
   love.graphics.setColor(255,0,0,self._dmplacewarning*255)
+
   love.graphics.rectangle("line",
     love.graphics.getWidth()/10,
     love.graphics.getHeight()/8,

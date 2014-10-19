@@ -22,7 +22,7 @@ function player.new()
   self.setY=player.setY
   self.setPosition=player.setPosition
   self._velocityX = 0
-  self._speed=100
+  self._speed=150
   self.getSpeed=player.getSpeed
   self.setSpeed=player.setSpeed
   
@@ -69,6 +69,15 @@ function player:update(dt)
   
   self._x = self._x + vx*dt*self:getSpeed()
   self._y = self._y + vy*dt*self:getSpeed()
+
+  if self._x > love.graphics.getWidth() then
+    self._x = love.graphics.getWidth()
+  end
+  if self._x < 0 then self._x = 0 end
+  if self._y > love.graphics.getHeight() then
+    self._y = love.graphics.getHeight()
+  end
+  if self._y < 0 then self._y = 0 end
   
   self._animTime = self._animTime - dt
   if self._animTime <= 0 then
@@ -104,11 +113,6 @@ function player:draw()
   end
   love.graphics.draw( player_img, quad, self:getX(), self:getY(), self._spriteRotation, 1, 1, 32, 32 )
   
-  love.graphics.setColor( 255, 255, 0 )
-  love.graphics.circle( "line", 
-    self:getX(), self:getY(), 
-    16, 20
-  )
   love.graphics.setColor( 255, 255, 255, 255 )
 end
 
