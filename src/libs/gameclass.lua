@@ -22,6 +22,8 @@ function game.new()
   self.getBullets=game.getBullets
   self.setBullets=game.setBullets
 
+  self._score = 0
+  
   self.addBullet=game.addBullet
 
   self:makePlayers()
@@ -88,6 +90,7 @@ function game:update(dt)
 		table.remove( self._bullets, i )
 		if enemy:getHealth() <= 0 then
 		  table.remove( self._enemies, _ )
+		  self._score = self._score + 10000 + math.random( 1, 9999 )
 		end
       end
     end
@@ -118,6 +121,10 @@ function game:draw()
     bullet:draw()
   end
 
+  love.graphics.setColor(255,255,255,255)
+  love.graphics.printf("Score: "..self._score,
+    0,love.graphics.getHeight()/16,love.graphics.getWidth(),"left")
+  
   love.graphics.setColor(255,255,255,self._dmplacewarning*255)
 
   love.graphics.printf("Click outside the box to choose where you deploy.",
