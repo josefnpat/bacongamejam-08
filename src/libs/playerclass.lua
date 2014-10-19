@@ -33,13 +33,13 @@ function player.new()
   
   player_img:setFilter("nearest","nearest")
   self._idlequads = {}
-  self._deathquads = {}
+  self._movequads = {}
   for i = 0,3 do
     for j = 0,3 do
 	  if i < 2 then
 	    table.insert(self._idlequads,love.graphics.newQuad(64*j,64*i,64,64,256,256))
 	  elseif i == 2 then
-	    table.insert(self._deathquads,love.graphics.newQuad(64*j,64*i,64,64,256,256))
+	    table.insert(self._movequads,love.graphics.newQuad(64*j,64*i,64,64,256,256))
 	  end
 	end
   end
@@ -56,6 +56,18 @@ end
 
 function player:update(dt)
   local vx,vy = self._dong:getBind("move")
+  
+  if vx ~= 0 or vy ~= 0 then
+    -- if no rotation before, then reset frame
+	if self._spriteRotation == nil then self._frameIdx = 1 end
+    self._spriteRotation = math.atan2(vy,vx)
+	print( "Velocity: ( "..vx..", "..vy.." ) , rotation: "..self._spriteRotation )
+  else
+    -- if rotation before, then reset frame
+	if self._spriteRotation ~= nil then self._frameIdx = 1 end
+    self._spriteRotation = nil
+  end
+  
   self._x = self._x + vx*dt*self:getSpeed()
   self._y = self._y + vy*dt*self:getSpeed()
   
@@ -63,10 +75,10 @@ function player:update(dt)
   if self._animTime <= 0 then
     self._animTime = self._frameDuration + self._animTime
     self._frameIdx = self._frameIdx + 1
-	if self._dying ~= true then
+	if self._spriteRotation == nil then
 	  if self._frameIdx > 8 then self._frameIdx = 1 end
 	else
-	  if self._frameIdx > 4 then self._frameIdx = 5 end
+	  if self._frameIdx > 4 then self._frameIdx = 1 end
 	end
   end
   
@@ -85,13 +97,19 @@ end
 
 function player:draw()
   
+  love.graphics.push()
+  love.graphics.translate( self:getX()-32, self:getY()-32 )
+  
   local quad = nil
-  if not self._dying then
+  if self._spriteRotation == nil then
     quad = self._idlequads[self._frameIdx]
-  elseif self._frameIdx < 5 then
-    quad = self._deathquads[self._frameIdx]
+  else
+    quad = self._movequads[self._frameIdx]
+	love.graphics.rotate( self._spriteRotation )
   end
-  love.graphics.draw( player_img, quad, self:getX()-32, self:getY()-32 )
+  love.graphics.draw( player_img, quad, 0, 0 )
+  
+  love.graphics.pop()
   
   love.graphics.setColor( 255, 255, 0 )
   love.graphics.circle( "line", 
