@@ -4,6 +4,8 @@ dong2lib = require"libs.dong2"
 menuclass = require"libs.menuclass"
 menuitemclass = require"libs.menuitemclass"
 
+splashclass = require"libs.splashclass"
+
 gameclass = require"libs.gameclass"
 playerclass = require"libs.playerclass"
 enemyclass = require"libs.enemyclass"
@@ -14,6 +16,7 @@ gamestates = {}
 gamestates.main = require("gamestates.main")
 gamestates.game = require("gamestates.game")
 gamestates.death = require("gamestates.death")
+gamestates.splash = require("gamestates.splash")
 
 colors = require "libs.colors"
 
@@ -57,7 +60,7 @@ function love.load(args)
   setDongBindings(keyb_dong)
   table.insert(dongs,keyb_dong)
   Gamestate.registerEvents()
-  Gamestate.switch(gamestates.main)
+  Gamestate.switch(gamestates.splash)
 
 end
 
