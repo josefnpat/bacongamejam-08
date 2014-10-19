@@ -1,6 +1,7 @@
 local state = {}
 
 function state:enter()
+  self._game = gameclass.new()
   music:play()
 end
 
@@ -33,7 +34,7 @@ end
 
 function state:keypressed(key)
   if key == "escape" then
-  self._game = gameclass.new()
+    self._game = gameclass.new()
     Gamestate.switch(gamestates.main)
   end
 end
