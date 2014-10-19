@@ -1,0 +1,7 @@
+*.swp
+src/git.lua
+._temp.love
+ext/
+.DS_Store
+builds/
+ci.log
