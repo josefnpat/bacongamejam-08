@@ -64,6 +64,7 @@ end
 
 function game:addBullet( val )
   table.insert( self._bullets, val )
+  love.audio.newSource("assets/sfx/".."shoot"..".ogg","static"):play()
 end
 
 function game:update(dt)
@@ -103,6 +104,7 @@ function game:update(dt)
 	  local dy = enemy:getY() - bullet:getY()
 	  if bulletRadius*bulletRadius > dx*dx + dy*dy then
 	    enemy:setHealth( enemy:getHealth() - 1 )
+		love.audio.newSource("assets/sfx/".."death"..".wav","static"):play()
 		table.remove( self._bullets, i )
 		if enemy:getHealth() <= 0 then
 		  table.remove( self._enemies, _ )
@@ -120,6 +122,7 @@ function game:update(dt)
 	  local dy = enemy:getY() - player:getY()
 	  if enemyRadius*enemyRadius > dx*dx + dy*dy then
 	    player:takeDamage()
+		love.audio.newSource("assets/sfx/".."death"..".wav","static"):play()
 		if player:getHealth() <= 0 then
 		  Gamestate.switch(gamestates.death)
 		end

@@ -18,6 +18,8 @@ gamestates.game = require("gamestates.game")
 gamestates.death = require("gamestates.death")
 gamestates.splash = require("gamestates.splash")
 
+sfx = require("libs.sfx")
+
 colors = require "libs.colors"
 
 music = love.audio.newSource("assets/BGJ08.ogg")
