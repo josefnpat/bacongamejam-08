@@ -25,10 +25,32 @@ function player.new()
   self._speed=100
   self.getSpeed=player.getSpeed
   self.setSpeed=player.setSpeed
+  
+  -- lazy alloc of global texture
+  if player_img == nil then
+    player_img = love.graphics.newImage("assets/cell.png")
+  end
+  
+  player_img:setFilter("nearest","nearest")
+  self._idlequads = {}
+  self._deathquads = {}
+  for i = 0,3 do
+    for j = 0,3 do
+	  if i < 2 then
+	    table.insert(self._idlequads,love.graphics.newQuad(64*j,64*i,64,64,256,256))
+	  elseif i == 2 then
+	    table.insert(self._deathquads,love.graphics.newQuad(64*j,64*i,64,64,256,256))
+	  end
+	end
+  end
+  self._dying = false
+  self._frameDuration = 0.1
+  self._animTime = self._frameDuration
+  self._frameIdx = 1
 
   self._refiredt = 0
   self._refiret = 0.1
-
+  
   return self
 end
 
@@ -36,6 +58,18 @@ function player:update(dt)
   local vx,vy = self._dong:getBind("move")
   self._x = self._x + vx*dt*self:getSpeed()
   self._y = self._y + vy*dt*self:getSpeed()
+  
+  self._animTime = self._animTime - dt
+  if self._animTime <= 0 then
+    self._animTime = self._frameDuration + self._animTime
+    self._frameIdx = self._frameIdx + 1
+	if self._dying ~= true then
+	  if self._frameIdx > 8 then self._frameIdx = 1 end
+	else
+	  if self._frameIdx > 4 then self._frameIdx = 5 end
+	end
+  end
+  
   local sx,sy = self._dong:getBind("shoot")
   if (sx ~= 0 or sy ~= 0) then
     self._refiredt = self._refiredt + dt
@@ -50,10 +84,19 @@ function player:update(dt)
 end
 
 function player:draw()
+  
+  local quad = nil
+  if not self._dying then
+    quad = self._idlequads[self._frameIdx]
+  elseif self._frameIdx < 5 then
+    quad = self._deathquads[self._frameIdx]
+  end
+  love.graphics.draw( player_img, quad, self:getX()-32, self:getY()-32 )
+  
   love.graphics.setColor( 255, 255, 0 )
-  love.graphics.circle( "fill", 
-    self._x - 20, self:getY() - 20, 
-    32, 3
+  love.graphics.circle( "line", 
+    self:getX(), self:getY(), 
+    16, 20
   )
   love.graphics.setColor( 255, 255, 255, 255 )
 end

@@ -31,7 +31,6 @@ end
 
 function game:makePlayers()
   self._players = {}
-  print("making players")
   for i=1,#dongs do
     local p = playerclass.new()
     p:setHealth(10)
