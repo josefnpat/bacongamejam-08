@@ -4,6 +4,8 @@ dong2lib = require"libs.dong2"
 menuclass = require"libs.menuclass"
 menuitemclass = require"libs.menuitemclass"
 
+gameclass = require"libs.gameclass"
+
 gamestates = {}
 
 gamestates.main = require("gamestates.main")
