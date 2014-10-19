@@ -22,10 +22,16 @@ function player.new()
   self.setY=player.setY
   self.setPosition=player.setPosition
   self._velocityX = 0
+  self._speed=100
+  self.getSpeed=player.getSpeed
+  self.setSpeed=player.setSpeed
   return self
 end
 
-function player:update()
+function player:update(dt)
+  local vx,vy = self._dong:getBind("move")
+  self._x = self._x + vx*dt*self:getSpeed()
+  self._y = self._y + vy*dt*self:getSpeed()
 end
 
 function player:draw()
@@ -89,5 +95,13 @@ end
 
 function player:setRotation(val)
   self._rotation = val
+end
+
+function player:getSpeed()
+  return self._speed
+end
+
+function player:setSpeed(val)
+  self._speed=  val
 end
 return player
