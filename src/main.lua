@@ -25,7 +25,11 @@ colors = require "libs.colors"
 music = love.audio.newSource("assets/BGJ08.ogg")
 music:setLooping(true)
 
-game_name = "TALOX: Talox Aliens Lie On Xenons" -- aka discosperm
+game_name = "TALOX: Talox Aliens Lie On Xenons\n\n"..
+  "A game for BGJ8 by @josefnpat, @wespaugh and @blarget2\n"..
+  "Done in 7 hours!\n\n"..
+  "Players use wasd/ijkl and controllers.\n"..
+  "The DM uses the mouse to try and kill the players!" -- aka discosperm
 
 love.graphics.setFont(love.graphics.newFont("assets/PressStart2P.ttf"))
 
