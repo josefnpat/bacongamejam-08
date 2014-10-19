@@ -19,6 +19,9 @@ function game.new()
   self._bullets={} --init
   self.getBullets=game.getBullets
   self.setBullets=game.setBullets
+
+  self.addBullet=game.addBullet
+
   self:makePlayers()
 
   self._dmplacewarning=1
@@ -36,9 +39,6 @@ function game:makePlayers()
     p:setPosition( math.random(140,140*6), math.random(140,140*4) )
     p._dong = dongs[i] -- hack hack hack
     table.insert(self._players, p)
-  end
-
-  for i=1,1000 do
   end
 end
 
