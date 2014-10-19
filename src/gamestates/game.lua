@@ -1,5 +1,13 @@
 local state = {}
 
+function state:enter()
+  music:play()
+end
+
+function state:leave()
+  music:stop()
+end
+
 function state:init()
   self._game = gameclass.new()
 end
