@@ -150,7 +150,7 @@ function game:dm_add(x,y)
   end
 
   local e = enemyclass.new()
-  e:setHealth(2)
+  e:setHealth( math.random(1,3) )
   e:setDamage(1)
   e:setPosition(x,y)
   table.insert(self._enemies,e)
