@@ -40,9 +40,9 @@ function game.new()
   }
 
   self._accu = 30
-  self._accu_max = 60
+  self._accu_max = 30*#dongs
   self._accu_dt = 0
-  self._accu_t = 0.5
+  self._accu_t = 1
 
   self._spawn_dt = 0
   self._spawn_t = 0.1
