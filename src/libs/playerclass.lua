@@ -2,15 +2,21 @@ local player = {}
 
 function player.new()
   local self={}
-  self.update=Player.update
-  self.draw=Player.draw
-  self.die=Player.die
+  self.update=player.update
+  self.draw=player.draw
+  self.die=player.die
   self._health=nil --init
-  self.getHealth=Player.getHealth
-  self.setHealth=Player.setHealth
+  self.getHealth=player.getHealth
+  self.setHealth=player.setHealth
   self._damage=nil --init
-  self.getDamage=Player.getDamage
-  self.setDamage=Player.setDamage
+  self.getDamage=player.getDamage
+  self.setDamage=player.setDamage
+  self._x = 0
+  self._y = 0
+  self.getX=player.getX
+  self.getY=player.getY
+  self.setX=player.setX
+  self.setY=player.setY
   return self
 end
 
@@ -37,6 +43,22 @@ end
 
 function player:setDamage(val)
   self._damage=val
+end
+
+function player:setX(val)
+  self._x = val
+end
+
+function player:setY(val)
+ self._y = val
+end
+
+function player:getX()
+  return self._x
+end
+
+function player:getY()
+  return self._y
 end
 
 return player
