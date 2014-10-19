@@ -17,6 +17,7 @@ function player.new()
   self.getY=player.getY
   self.setX=player.setX
   self.setY=player.setY
+  self.setPosition=player.setPosition
   return self
 end
 
@@ -24,6 +25,14 @@ function player:update()
 end
 
 function player:draw()
+  print("drawing player")
+  love.graphics.setColor( 255, 255, 0 )
+  love.graphics.triangle( "line", 
+    self._x - 20, self._y - 20, 
+    self._x, self._y + 20, 
+    self._x + 20, self._y - 20 
+  )
+  love.graphics.setColor( 255, 255, 0, 255 )
 end
 
 function player:die()
@@ -59,6 +68,11 @@ end
 
 function player:getY()
   return self._y
+end
+
+function player:setPosition( x, y )
+  self:setX(x)
+  self:setY(y)
 end
 
 return player

@@ -17,15 +17,18 @@ function game.new()
   self._bullets={} --init
   self.getBullets=game.getBullets
   self.setBullets=game.setBullets
+  self:makePlayers()
   return self
 end
 
 function game:makePlayers()
   self._players = {}
+  print("making players")
   for i=1,3,1 do
     local p = playerclass.new()
 	p:setHealth(10)
 	p:setDamage(1)
+	p:setPosition( math.random(400,1400) )
 	table.insert(self._players, p)
   end
 end
@@ -35,9 +38,11 @@ function game:addBullet( val )
 end
 
 function game:update(dt)
+  if self._players == nil then self._players = {} end
   for i,player in pairs(self._players) do
     player:update(dt)
   end
+  if self._bullets == nil then self._bullets = {} end
   for i,bullet in pairs(self._bullets) do
     bullet:update(dt)
   end
