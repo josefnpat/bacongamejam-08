@@ -121,30 +121,30 @@ function game:draw()
   love.graphics.setColor(255,255,255,self._dmplacewarning*255)
 
   love.graphics.printf("Click outside the box to choose where you deploy.",
-    0,love.graphics.getHeight()/16,love.graphics.getWidth(),"center")
+    0,bheight/16,bwidth,"center")
 
   love.graphics.setColor(255,0,0,self._dmplacewarning*255)
 
   love.graphics.rectangle("line",
-    love.graphics.getWidth()/10,
-    love.graphics.getHeight()/8,
-    love.graphics.getWidth()*8/10,
-    love.graphics.getHeight()*6/8)
+    bwidth/10,
+    bheight/8,
+    bwidth*8/10,
+    bheight*6/8)
   love.graphics.setColor(255,255,255)
 end
 
 function game:dm_add(x,y)
-  if x > love.graphics.getWidth()/10 and
-    x < love.graphics.getWidth()*9/10 and
-    y > love.graphics.getHeight()/8 and
-    y < love.graphics.getHeight()*7/8 then
+  if x > bwidth/10 and
+    x < bwidth*9/10 and
+    y > bheight/8 and
+    y < bheight*7/8 then
     self._dmplacewarning=1
     if math.random(0,1) == 1 then
-      x = math.random(0,love.graphics.getWidth())
-      y = math.random(0,1)*love.graphics.getHeight()
+      x = math.random(0,bwidth)
+      y = math.random(0,1)*bheight
     else
-      y = math.random(0,love.graphics.getHeight())
-      x = math.random(0,1)*love.graphics.getWidth()
+      y = math.random(0,bheight)
+      x = math.random(0,1)*bwidth
     end
 
   end

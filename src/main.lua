@@ -23,6 +23,9 @@ game_name = "TALOX: Talox Aliens Lie On Xenons" -- aka discosperm
 
 love.graphics.setFont(love.graphics.newFont("assets/PressStart2P.ttf"))
 
+bwidth = 1280
+bheight = 720
+
 dong_bind_down = {}
 function anydong(bind)
   for _,dong in pairs(dongs) do

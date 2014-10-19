@@ -13,6 +13,10 @@ function state:init()
 end
 
 function state:draw()
+  if love.window.getFullscreen( ) then
+    local gwidth,gheight = love.window.getDesktopDimensions()
+    love.graphics.scale( gwidth/bwidth, gheight/bheight)
+  end
   self._game:draw()
 end
 

@@ -18,10 +18,10 @@ end
 
 function menu:draw()
   local width = 320
-  local x = (love.graphics.getWidth() - width)/2
+  local x = (bwidth - width)/2
   local height = love.graphics.getFont():getHeight()*1.8
   local padding = height
-  local y = (love.graphics.getHeight() - (height+padding)*#self._items)/2
+  local y = (bheight - (height+padding)*#self._items)/2
   for index,item in pairs(self._items) do
     item:draw(x,y+index*(height+padding),width,height,index==self._selected)
   end
