@@ -30,6 +30,7 @@ end
 
 function state:keypressed(key)
   if key == "escape" then
+  self._game = gameclass.new()
     Gamestate.switch(gamestates.main)
   end
 end
