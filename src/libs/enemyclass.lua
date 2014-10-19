@@ -30,7 +30,7 @@ function enemy.new()
   self._y = nil
   self.getY=enemy.getY
   self.setY=enemy.setY
-  self._speed=100 --init
+  self._speed=math.random(80,120) --init
   self.getSpeed=enemy.getSpeed
   self.setSpeed=enemy.setSpeed
 

@@ -22,7 +22,7 @@ function player.new()
   self.setY=player.setY
   self.setPosition=player.setPosition
   self._velocityX = 0
-  self._speed=100
+  self._speed=150
   self.getSpeed=player.getSpeed
   self.setSpeed=player.setSpeed
   
@@ -113,11 +113,6 @@ function player:draw()
   end
   love.graphics.draw( player_img, quad, self:getX(), self:getY(), self._spriteRotation, 1, 1, 32, 32 )
   
-  love.graphics.setColor( 255, 255, 0 )
-  love.graphics.circle( "line", 
-    self:getX(), self:getY(), 
-    16, 20
-  )
   love.graphics.setColor( 255, 255, 255, 255 )
 end
 
