@@ -2,6 +2,17 @@
 Gamestate = require"libs.gamestate"
 dong2lib = require"libs.dong2"
 
+gamestates = {}
+
+gamestates.main = require("gamestates.main")
+gamestates.game = require("gamestates.game")
+
+function anydong(bind)
+  for _,dong in pairs(dongs) do
+    local v = dong:getBind(bind)
+    if v then return v end
+  end
+end
 
 -- FROM DONG2 EXAMPLE
 function love.joystickadded(joystick)
@@ -17,6 +28,9 @@ function love.load(args)
   local keyb_dong = dong2lib.new()
   setDongBindings(keyb_dong)
   table.insert(dongs,keyb_dong)
+  Gamestate.registerEvents()
+  Gamestate.switch(gamestates.main)
+
 end
 
 function love.update(dt)
