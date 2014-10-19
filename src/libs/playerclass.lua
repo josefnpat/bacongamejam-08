@@ -11,9 +11,9 @@ function player.new()
   self._damage=0 --init
   self.getDamage=player.getDamage
   self.setDamage=player.setDamage
-  self._rotation = 0
-  self._setRotation=player.setRotation
-  self._getRotation=player.getRotation
+  self._angle = 0
+  self.setAngle=player.setAngle
+  self.getAngle=player.getAngle
   self._x = 0
   self._y = 0
   self.getX=player.getX
@@ -47,11 +47,15 @@ function player.new()
   self._frameDuration = 0.1
   self._animTime = self._frameDuration
   self._frameIdx = 1
+
+  self._refiredt = 0
+  self._refiret = 0.1
   
   return self
 end
 
 function player:update(dt)
+  self._refiredt = self._refiredt + dt
   local vx,vy = self._dong:getBind("move")
   self._x = self._x + vx*dt*self:getSpeed()
   self._y = self._y + vy*dt*self:getSpeed()
@@ -65,6 +69,15 @@ function player:update(dt)
 	else
 	  if self._frameIdx > 4 then self._frameIdx = 5 end
 	end
+  end
+  
+  local sx,sy = self._dong:getBind("shoot")
+  if (sx ~= 0 or sy ~= 0) and self._refiredt > self._refiret then 
+    self._refiredt = self._refiredt - self._refiret
+    local b = bulletclass.new()
+    b:setPosition( self:getX(), self:getY() )
+    b:setAngle( math.atan2(sy,sx) )
+    gamestates.game._game:addBullet( b)
   end
 end
 
@@ -132,12 +145,12 @@ function player:getPosition()
   return { self:getX(), self:getY() }
 end
 
-function player:getRotation()
-  return self._rotation
+function player:getAngle()
+  return self._angle
 end
 
-function player:setRotation(val)
-  self._rotation = val
+function player:setAngle(val)
+  self._angle = val
 end
 
 function player:getSpeed()
