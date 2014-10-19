@@ -1,94 +1,29 @@
-local game = {}
-
-function game.new()
-  local self={}
-  self.makePlayers=game.makePlayers
-  self.update=game.update
-  self.draw=game.draw
-  self._players={} --init
-  self.getPlayers=game.getPlayers
-  self.setPlayers=game.setPlayers
-  self._enemies={} --init
-  self.getEnemies=game.getEnemies
-  self.setEnemies=game.setEnemies
-  self._dm=nil --init
-  self.getDm=game.getDm
-  self.setDm=game.setDm
-  self._bullets={} --init
-  self.getBullets=game.getBullets
-  self.setBullets=game.setBullets
-  self:makePlayers()
-  return self
+local state = {}
+gameclass = require("libs.gameclass")
+function state:init()
+  self._game = gameclass.new()
 end
 
-function game:makePlayers()
-  self._players = {}
-  print("making players")
-  for i=1,3,1 do
-    local p = playerclass.new()
-	p:setHealth(10)
-	p:setDamage(1)
-	p:setPosition( math.random(400,1400) )
-	table.insert(self._players, p)
+function state:draw()
+  love.graphics.printf(game_name,
+    0,love.graphics.getHeight()/4,
+    love.graphics.getWidth(),"center")
+  self._game:draw()
+end
+
+function state:update(dt)
+  self._game:update(dt)
+  --[[
+  if anydong("confirm") then
+    self._menu:select()
   end
-end
-
-function game:addBullet( val )
-  table.insert( self._bullets, val )
-end
-
-function game:update(dt)
-  if self._players == nil then self._players = {} end
-  for i,player in pairs(self._players) do
-    player:update(dt)
+  if anydong("up") then
+    self._menu:up()
   end
-  if self._bullets == nil then self._bullets = {} end
-  for i,bullet in pairs(self._bullets) do
-    bullet:update(dt)
+  if anydong("down") then
+    self._menu:down()
   end
+  ]]--
 end
 
-function game:draw()
-  if self._players == nil then self._players = {} end
-  for i,player in pairs(self._players) do
-    player:draw()
-  end
-  if self._bullets == nil then self._bullets = {} end
-  for i,bullet in pairs(self._bullets) do
-    bullet:draw()
-  end
-end
-
-function game:getPlayers()
-  return self._players
-end
-
-function game:setPlayers(val)
-  self._players=val
-end
-
-function game:getEnemies()
-  return self._enemies
-end
-
-function game:setEnemies(val)
-  self._enemies=val
-end
-
-function game:getDm()
-  return self._dm
-end
-
-function game:setDm(val)
-  self._dm=val
-end
-
-function game:getBullets()
-  return self._bullets
-end
-
-function game:setBullets(val)
-  self._bullets=val
-end
-
-return game
+return state

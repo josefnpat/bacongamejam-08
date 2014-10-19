@@ -25,14 +25,12 @@ function player:update()
 end
 
 function player:draw()
-  print("drawing player")
   love.graphics.setColor( 255, 255, 0 )
-  love.graphics.triangle( "line", 
-    self._x - 20, self._y - 20, 
-    self._x, self._y + 20, 
-    self._x + 20, self._y - 20 
+  love.graphics.circle( "fill", 
+    self._x - 20, self:getY() - 20, 
+    200, 20
   )
-  love.graphics.setColor( 255, 255, 0, 255 )
+  love.graphics.setColor( 255, 255, 255, 255 )
 end
 
 function player:die()
@@ -63,16 +61,22 @@ function player:setY(val)
 end
 
 function player:getX()
+  if self._x == nil then self:setX(0) end
   return self._x
 end
 
 function player:getY()
+  if self._y == nil then self:setY(0) end
   return self._y
 end
 
 function player:setPosition( x, y )
   self:setX(x)
   self:setY(y)
+end
+
+function player:getPosition()
+  return { self:getX(), self:getY() }
 end
 
 return player
