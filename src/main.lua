@@ -19,7 +19,7 @@ colors = require "libs.colors"
 music = love.audio.newSource("assets/BGJ08.ogg")
 music:setLooping(true)
 
-game_name = "The amazong game"
+game_name = "TALOX: Talox Aliens Lie On Xenons" -- aka discosperm
 
 love.graphics.setFont(love.graphics.newFont("assets/PressStart2P.ttf"))
 
