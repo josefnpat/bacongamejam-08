@@ -1,16 +1,28 @@
-
 Gamestate = require"libs.gamestate"
 dong2lib = require"libs.dong2"
+
+menuclass = require"libs.menuclass"
+menuitemclass = require"libs.menuitemclass"
 
 gamestates = {}
 
 gamestates.main = require("gamestates.main")
 gamestates.game = require("gamestates.game")
 
+colors = require "libs.colors"
+
+dong_bind_down = {}
 function anydong(bind)
   for _,dong in pairs(dongs) do
     local v = dong:getBind(bind)
-    if v then return v end
+    if v then
+      if not dong_bind_down[bind] then
+        dong_bind_down[bind] = true
+        return v
+      end
+    else
+      dong_bind_down[bind] = nil
+    end
   end
 end
 
@@ -40,6 +52,9 @@ function love.update(dt)
 end
 
 function love.keypressed(key)
+  for _,dong in pairs(dongs) do
+    dong:keypressed(key)
+  end
   if key == "`" then
     global_debug_mode = not global_debug_mode
   end
@@ -111,6 +126,28 @@ function setDongBindings(dong)
       PS3={args={"RSX","RSY"},name="RS"},
       KEYBMOUSE={args={"i","j","k","l"},name="IJKL"},
       LOGITECH_F310={args={"RSX","RSY",name="RS"}},
+    })
+
+  dong:setBind("up",
+    function(self,data) return data[1] or data[2] end,
+    {
+      XBOX_360={args={"DU"},name="DU"},
+      XBOX_360_XINPUT={args={"DU"},name="DU"},
+      OUYA={args={"DU"},name="DU"},
+      PS3={args={"DU"},name="DU"},
+      KEYBMOUSE={args={"w","up"},name="up"},
+      LOGITECH_F310={args={"DU",name="DU"}},
+    })
+
+  dong:setBind("down",
+    function(self,data) return data[1] or data[2] end,
+    {
+      XBOX_360={args={"DD"},name="DD"},
+      XBOX_360_XINPUT={args={"DD"},name="DD"},
+      OUYA={args={"DD"},name="DD"},
+      PS3={args={"DD"},name="DD"},
+      KEYBMOUSE={args={"s","down"},name="down"},
+      LOGITECH_F310={args={"DD",name="DD"}},
     })
 
 end
