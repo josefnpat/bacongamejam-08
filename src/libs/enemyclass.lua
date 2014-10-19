@@ -1,5 +1,16 @@
 local enemy = {}
 
+enemy.img = love.graphics.newImage("assets/cellenemy.png")
+
+enemy.quads = {}
+for y = 1,2 do
+  for x = 1,4 do
+    table.insert(enemy.quads,
+      love.graphics.newQuad((x-1)*64,(y-1)*64,64,64,256,256)
+    )
+  end
+end
+
 function enemy.new()
   local self={}
   self.update=enemy.update
@@ -22,10 +33,33 @@ function enemy.new()
   self._speed=100 --init
   self.getSpeed=enemy.getSpeed
   self.setSpeed=enemy.setSpeed
+
+  self._angle=0
+  self.getAngle=enemy.getAngle
+  self.setAngle=enemy.setAngle
+
+  self._quad_index = 1
+  self._quad_dt = 0
+  self._quad_t = 0.1
+
+  self._color = {
+    math.random(127,255),
+    math.random(127,255),
+    math.random(127,255)
+  }
+
   return self
 end
 
 function enemy:update(dt)
+  self._quad_dt = self._quad_dt + dt
+  if self._quad_dt > self._quad_t then
+    self._quad_dt = 0
+    self._quad_index = self._quad_index + 1
+    if self._quad_index > #enemy.quads then
+      self._quad_index = 1
+    end
+  end
   local players = gamestates.game._game:getPlayers()
   local best_dist = math.huge
   local best_index
@@ -42,7 +76,12 @@ function enemy:update(dt)
 end
 
 function enemy:draw()
-  love.graphics.circle("line",self:getX(),self:getY(),16)
+  love.graphics.setColor(self._color)
+  love.graphics.draw(enemy.img,enemy.quads[self._quad_index],
+    self:getX(),self:getY(),
+    self:getAngle(),1,1,32,32
+  )
+  love.graphics.setColor(255,255,255)
 end
 
 function enemy:die()
@@ -60,6 +99,7 @@ function enemy:moveTo(dt,target)
   local x = math.cos(direction)*dt*self:getSpeed()
   local y = math.sin(direction)*dt*self:getSpeed()
   self:setPosition(self:getX()+x,self:getY()+y)
+  self:setAngle(direction)
 end
 
 function enemy:getHealth()
@@ -100,6 +140,14 @@ end
 
 function enemy:setSpeed(val)
   self._speed=val
+end
+
+function enemy:getAngle()
+  return self._angle
+end
+
+function enemy:setAngle(val)
+  self._angle = val
 end
 
 return enemy

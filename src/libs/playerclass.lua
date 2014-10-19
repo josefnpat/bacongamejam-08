@@ -33,17 +33,19 @@ function player.new()
 end
 
 function player:update(dt)
-  self._refiredt = self._refiredt + dt
   local vx,vy = self._dong:getBind("move")
   self._x = self._x + vx*dt*self:getSpeed()
   self._y = self._y + vy*dt*self:getSpeed()
   local sx,sy = self._dong:getBind("shoot")
-  if (sx ~= 0 or sy ~= 0) and self._refiredt > self._refiret then 
-    self._refiredt = self._refiredt - self._refiret
-    local b = bulletclass.new()
-    b:setPosition( self:getX(), self:getY() )
-    b:setAngle( math.atan2(sy,sx) )
-    gamestates.game._game:addBullet( b)
+  if (sx ~= 0 or sy ~= 0) then
+    self._refiredt = self._refiredt + dt
+    if self._refiredt > self._refiret then 
+      self._refiredt = self._refiredt - self._refiret
+      local b = bulletclass.new()
+      b:setPosition( self:getX(), self:getY() )
+      b:setAngle( math.atan2(sy,sx) )
+      gamestates.game._game:addBullet( b)
+    end
   end
 end
 
