@@ -25,6 +25,9 @@ function player.new()
   self._speed=150
   self.getSpeed=player.getSpeed
   self.setSpeed=player.setSpeed
+  self.takeDamage=player.takeDamage
+  self._damageCountdown = 0.6
+  self._damageTimer = 0
   
   -- lazy alloc of global texture
   if player_img == nil then
@@ -65,6 +68,12 @@ function player:update(dt)
     -- if rotation before, then reset frame
 	if self._spriteRotation ~= nil then self._frameIdx = 1 end
     self._spriteRotation = nil
+  end
+  
+  if self._damageTimer > 0 then
+    self._damageTimer = self._damageTimer - dt
+  else 
+    self._damageTimer = 0
   end
   
   self._x = self._x + vx*dt*self:getSpeed()
@@ -133,6 +142,14 @@ end
 
 function player:setDamage(val)
   self._damage=val
+end
+
+function player:takeDamage()
+  if self._damageTimer > 0 then 
+    return 
+  end
+  self._health = self._health - 1
+  self._damageTimer = self._damageCountdown
 end
 
 function player:setX(val)

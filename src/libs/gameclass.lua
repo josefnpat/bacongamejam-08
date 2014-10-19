@@ -98,6 +98,17 @@ function game:update(dt)
   
   for _,enemy in pairs(self._enemies) do
     enemy:update(dt)
+    for i,player in pairs(self._players) do
+	  local enemyRadius = 16
+	  local dx = enemy:getX() - player:getX()
+	  local dy = enemy:getY() - player:getY()
+	  if enemyRadius*enemyRadius > dx*dx + dy*dy then
+	    player:takeDamage()
+		if player:getHealth() <= 0 then
+		  Gamestate.switch(gamestates.death)
+		end
+      end
+    end
   end
 end
 
@@ -120,15 +131,24 @@ function game:draw()
   for i,bullet in pairs(self._bullets) do
     bullet:draw()
   end
-
+  
+  
   love.graphics.setColor(255,255,255,255)
   love.graphics.printf("Score: "..self._score,
-    0,love.graphics.getHeight()/16,love.graphics.getWidth(),"left")
+    32,love.graphics.getHeight()/16,love.graphics.getWidth(),"left")
+	
+	  
+  local idx = 1
+  for _,player in pairs(self._players) do
+    love.graphics.printf("P"..idx.." Health: "..player:getHealth(),
+      32,love.graphics.getHeight()/8 + 32*idx,love.graphics.getWidth(),"left")
+	idx = idx + 1
+  end
   
   love.graphics.setColor(255,255,255,self._dmplacewarning*255)
 
   love.graphics.printf("Click outside the box to choose where you deploy.",
-    0,bheight/16,bwidth,"center")
+    64,bheight/16,bwidth,"center")
 
   love.graphics.setColor(255,0,0,self._dmplacewarning*255)
 
