@@ -14,7 +14,7 @@ function bullet.new()
   self._angle=nil --init
   self.getAngle=bullet.getAngle
   self.setAngle=bullet.setAngle
-  self._speed=200 --init
+  self._speed=200*2 --init
   self.getSpeed=bullet.getSpeed
   self.setSpeed=bullet.setSpeed
   self._damage=nil --init
