@@ -97,19 +97,13 @@ end
 
 function player:draw()
   
-  love.graphics.push()
-  love.graphics.translate( self:getX()-32, self:getY()-32 )
-  
   local quad = nil
   if self._spriteRotation == nil then
     quad = self._idlequads[self._frameIdx]
   else
     quad = self._movequads[self._frameIdx]
-	love.graphics.rotate( self._spriteRotation )
   end
-  love.graphics.draw( player_img, quad, 0, 0 )
-  
-  love.graphics.pop()
+  love.graphics.draw( player_img, quad, self:getX(), self:getY(), self._spriteRotation, 1, 1, 32, 32 )
   
   love.graphics.setColor( 255, 255, 0 )
   love.graphics.circle( "line", 
