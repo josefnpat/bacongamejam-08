@@ -61,7 +61,6 @@ function player:update(dt)
     -- if no rotation before, then reset frame
 	if self._spriteRotation == nil then self._frameIdx = 1 end
     self._spriteRotation = math.atan2(vy,vx)
-	print( "Velocity: ( "..vx..", "..vy.." ) , rotation: "..self._spriteRotation )
   else
     -- if rotation before, then reset frame
 	if self._spriteRotation ~= nil then self._frameIdx = 1 end
