@@ -13,6 +13,7 @@ gamestates = {}
 
 gamestates.main = require("gamestates.main")
 gamestates.game = require("gamestates.game")
+gamestates.death = require("gamestates.death")
 
 colors = require "libs.colors"
 

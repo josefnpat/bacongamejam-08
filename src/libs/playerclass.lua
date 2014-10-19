@@ -52,7 +52,7 @@ function player.new()
   self._frameIdx = 1
 
   self._refiredt = 0
-  self._refiret = 0.1
+  self._refiret = 0.1*2
   
   return self
 end

@@ -30,11 +30,14 @@ function state:init()
   ))
 end
 
+state._img = love.graphics.newImage("assets/background3.png")
+
 function state:draw()
   if love.window.getFullscreen( ) then
     local gwidth,gheight = love.window.getDesktopDimensions()
     love.graphics.scale( gwidth/bwidth, gheight/bheight)
   end
+  love.graphics.draw(state._img)
   love.graphics.printf(game_name,
     0,love.graphics.getHeight()/4,
     bwidth,"center")
