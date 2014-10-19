@@ -11,6 +11,8 @@ gamestates.game = require("gamestates.game")
 
 colors = require "libs.colors"
 
+game_name = "The amazong game"
+
 dong_bind_down = {}
 function anydong(bind)
   for _,dong in pairs(dongs) do

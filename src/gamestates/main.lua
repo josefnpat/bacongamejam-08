@@ -23,6 +23,9 @@ function state:init()
 end
 
 function state:draw()
+  love.graphics.printf(game_name,
+    0,love.graphics.getHeight()/4,
+    love.graphics.getWidth(),"center")
   self._menu:draw()
 end
 
