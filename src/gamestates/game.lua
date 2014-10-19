@@ -28,4 +28,10 @@ function state:mousepressed(x,y,button)
   self._game:dm_add(x,y)
 end
 
+function state:keypressed(key)
+  if key == "escape" then
+    Gamestate.switch(gamestates.main)
+  end
+end
+
 return state
