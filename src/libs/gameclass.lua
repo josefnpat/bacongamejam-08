@@ -6,6 +6,7 @@ function game.new()
   self.makePlayers=game.makePlayers
   self.update=game.update
   self.draw=game.draw
+  self.dm_add=game.dm_add
   self._players={} --init
   self.getPlayers=game.getPlayers
   self.setPlayers=game.setPlayers
@@ -19,34 +20,25 @@ function game.new()
   self.getBullets=game.getBullets
   self.setBullets=game.setBullets
   self:makePlayers()
+
+  self._dmplacewarning=1
+
   return self
 end
 
 function game:makePlayers()
   self._players = {}
   print("making players")
-  for i=1,3,1 do
+  for i=1,#dongs do
     local p = playerclass.new()
     p:setHealth(10)
     p:setDamage(1)
     p:setPosition( math.random(140,140*6), math.random(140,140*4) )
+    p._dong = dongs[i] -- hack hack hack
     table.insert(self._players, p)
   end
 
   for i=1,1000 do
-    local e = enemyclass.new()
-    e:setHealth(2)
-    e:setDamage(1)
-    local x,y
-    if math.random(0,1) == 1 then
-      x = math.random(0,love.graphics.getWidth())
-      y = math.random(0,1)*love.graphics.getHeight()
-    else
-      y = math.random(0,love.graphics.getHeight())
-      x = math.random(0,1)*love.graphics.getWidth()
-    end
-    e:setPosition(x,y)
-    table.insert(self._enemies,e)
   end
 end
 
@@ -55,6 +47,10 @@ function game:addBullet( val )
 end
 
 function game:update(dt)
+  self._dmplacewarning = self._dmplacewarning - dt
+  if self._dmplacewarning < 0 then
+    self._dmplacewarning = 0
+  end
   if self._players == nil then self._players = {} end
   for i,player in pairs(self._players) do
     player:update(dt)
@@ -80,6 +76,36 @@ function game:draw()
   for i,bullet in pairs(self._bullets) do
     bullet:draw()
   end
+  love.graphics.setColor(255,0,0,self._dmplacewarning*255)
+  love.graphics.rectangle("line",
+    love.graphics.getWidth()/10,
+    love.graphics.getHeight()/8,
+    love.graphics.getWidth()*8/10,
+    love.graphics.getHeight()*6/8)
+  love.graphics.setColor(255,255,255)
+end
+
+function game:dm_add(x,y)
+  if x > love.graphics.getWidth()/10 and
+    x < love.graphics.getWidth()*9/10 and
+    y > love.graphics.getHeight()/8 and
+    y < love.graphics.getHeight()*7/8 then
+    self._dmplacewarning=1
+    if math.random(0,1) == 1 then
+      x = math.random(0,love.graphics.getWidth())
+      y = math.random(0,1)*love.graphics.getHeight()
+    else
+      y = math.random(0,love.graphics.getHeight())
+      x = math.random(0,1)*love.graphics.getWidth()
+    end
+
+  end
+
+  local e = enemyclass.new()
+  e:setHealth(2)
+  e:setDamage(1)
+  e:setPosition(x,y)
+  table.insert(self._enemies,e)
 end
 
 function game:getPlayers()

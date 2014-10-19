@@ -19,7 +19,7 @@ function enemy.new()
   self._y = nil
   self.getY=enemy.getY
   self.setY=enemy.setY
-  self._speed=nil --init
+  self._speed=100 --init
   self.getSpeed=enemy.getSpeed
   self.setSpeed=enemy.setSpeed
   return self
@@ -38,7 +38,7 @@ function enemy:update(dt)
       best_index = i
     end
   end
-  self:moveTo( players[best_index] )
+  self:moveTo(dt,players[best_index])
 end
 
 function enemy:draw()
@@ -53,8 +53,13 @@ function enemy:setPosition(x,y)
   self:setY(y)
 end
 
-function enemy:moveTo( target )
-  
+function enemy:moveTo(dt,target)
+  local direction = math.atan2(
+    target:getY() - self:getY(),
+    target:getX() - self:getX())
+  local x = math.cos(direction)*dt*self:getSpeed()
+  local y = math.sin(direction)*dt*self:getSpeed()
+  self:setPosition(self:getX()+x,self:getY()+y)
 end
 
 function enemy:getHealth()
