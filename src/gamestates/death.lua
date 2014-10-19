@@ -16,7 +16,7 @@ end
 
 function state:update(dt)
   if anydong("confirm") then
-    Gamestate.switch(gamestates.menu)
+    Gamestate.switch(gamestates.main)
   end
 end
 

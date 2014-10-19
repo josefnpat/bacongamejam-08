@@ -39,7 +39,13 @@ function game.new()
     math.random(127,255)
   }
 
+  self._accu = 30
+  self._accu_max = 60
+  self._accu_dt = 0
+  self._accu_t = 0.5
 
+  self._spawn_dt = 0
+  self._spawn_t = 0.1
 
   return self
 end
@@ -61,6 +67,15 @@ function game:addBullet( val )
 end
 
 function game:update(dt)
+
+  self._spawn_dt = self._spawn_dt + dt
+
+  self._accu_dt = self._accu_dt + dt
+  if self._accu_dt > self._accu_t then
+    self._accu_dt = self._accu_dt - self._accu_t
+    self._accu = math.min(self._accu + 1,self._accu_max)
+  end
+
   self._bpm_dt = self._bpm_dt + dt
   if self._bpm_dt >= self._bpm_t then
     self._bpm_dt = self._bpm_dt - self._bpm_t
@@ -135,7 +150,8 @@ function game:draw()
   
   
   love.graphics.setColor(255,255,255,255)
-  love.graphics.printf("Score: "..self._score,
+  love.graphics.printf("Score: "..self._score.."\n"..
+    "Deployable: "..self._accu.."/"..self._accu_max,
     32,love.graphics.getHeight()/16,love.graphics.getWidth(),"left")
 	
 	  
@@ -145,7 +161,7 @@ function game:draw()
       32,love.graphics.getHeight()/8 + 32*idx,love.graphics.getWidth(),"left")
 	idx = idx + 1
   end
-  
+
   love.graphics.setColor(255,255,255,self._dmplacewarning*255)
 
   love.graphics.printf("Click outside the box to choose where you deploy.",
@@ -162,6 +178,17 @@ function game:draw()
 end
 
 function game:dm_add(x,y)
+  if self._spawn_dt > self._spawn_t then
+    self._spawn_dt = 0
+  else
+    return
+  end
+  if self._accu > 0 then
+    self._accu = self._accu - 1
+  else
+    return
+  end
+
   if x > bwidth/10 and
     x < bwidth*9/10 and
     y > bheight/8 and
