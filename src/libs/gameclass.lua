@@ -29,7 +29,7 @@ function game:makePlayers()
     local p = playerclass.new()
     p:setHealth(10)
     p:setDamage(1)
-    p:setPosition( math.random(400,1400) )
+    p:setPosition( math.random(140,140*6), math.random(140,140*4) )
     table.insert(self._players, p)
   end
 

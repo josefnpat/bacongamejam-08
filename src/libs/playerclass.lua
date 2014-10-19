@@ -5,12 +5,15 @@ function player.new()
   self.update=player.update
   self.draw=player.draw
   self.die=player.die
-  self._health=nil --init
+  self._health=0 --init
   self.getHealth=player.getHealth
   self.setHealth=player.setHealth
-  self._damage=nil --init
+  self._damage=0 --init
   self.getDamage=player.getDamage
   self.setDamage=player.setDamage
+  self._rotation = 0
+  self._setRotation=player.setRotation
+  self._getRotation=player.getRotation
   self._x = 0
   self._y = 0
   self.getX=player.getX
@@ -18,6 +21,7 @@ function player.new()
   self.setX=player.setX
   self.setY=player.setY
   self.setPosition=player.setPosition
+  self._velocityX = 0
   return self
 end
 
@@ -28,7 +32,7 @@ function player:draw()
   love.graphics.setColor( 255, 255, 0 )
   love.graphics.circle( "fill", 
     self._x - 20, self:getY() - 20, 
-    200, 20
+    32, 3
   )
   love.graphics.setColor( 255, 255, 255, 255 )
 end
@@ -79,4 +83,11 @@ function player:getPosition()
   return { self:getX(), self:getY() }
 end
 
+function player:getRotation()
+  return self._rotation
+end
+
+function player:setRotation(val)
+  self._rotation = val
+end
 return player
