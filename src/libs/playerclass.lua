@@ -70,12 +70,12 @@ function player:update(dt)
   self._x = self._x + vx*dt*self:getSpeed()
   self._y = self._y + vy*dt*self:getSpeed()
 
-  if self._x > love.graphics.getWidth() then
-    self._x = love.graphics.getWidth()
+  if self._x > bwidth then
+    self._x = bwidth
   end
   if self._x < 0 then self._x = 0 end
-  if self._y > love.graphics.getHeight() then
-    self._y = love.graphics.getHeight()
+  if self._y > bheight then
+    self._y = bheight
   end
   if self._y < 0 then self._y = 0 end
   

@@ -9,8 +9,16 @@ function state:init()
     end
   ))
 
-  self._menu:add(menuitemclass.new("Settings",
+  self._menu:add(menuitemclass.new("Toggle Fullscreen",
     function()
+      if love.window.getFullscreen() then
+        love.window.setMode(bwidth,bheight)
+        love.window.setFullscreen(false, "desktop")
+      else
+        local gwidth, gheight = love.window.getDesktopDimensions()
+        love.window.setMode(gwidth,gheight)
+        love.window.setFullscreen(true, "desktop")
+      end
       -- MEOW
     end
   ))
@@ -23,9 +31,13 @@ function state:init()
 end
 
 function state:draw()
+  if love.window.getFullscreen( ) then
+    local gwidth,gheight = love.window.getDesktopDimensions()
+    love.graphics.scale( gwidth/bwidth, gheight/bheight)
+  end
   love.graphics.printf(game_name,
     0,love.graphics.getHeight()/4,
-    love.graphics.getWidth(),"center")
+    bwidth,"center")
   self._menu:draw()
 end
 
